@@ -1,17 +1,16 @@
-#snijpunt op basis van afstanden
 from math import sqrt, sin, cos, atan
 
-# Coordinaten Amsterdam, Eindhoven en Groningen
+# Coordinates of stations in Amsterdam, Eindhoven and Groningen
 XA, YA, GA = 125.2667666, 485.3137747, -0.35
 XE, YE, GE = 161.9724388, 384.3876739, 0.08
 XG, YG, GG = 231.0298275, 585.3039689, 0.91
 
-#Berekening afstanden tussen stations.
+# Distance between the stations
 LAE = sqrt((XA - XE) ** 2 + (YA - YE) ** 2)
 LAG = sqrt((XA - XG) ** 2 + (YA - YG) ** 2)
 LEG = sqrt((XE - XG) ** 2 + (YE - YG) ** 2)
 
-#Hoeken tussen de stations.
+# Angles between the stations
 RAE = atan((YE - YA) / (XE - XA))
 RAG = atan((YG - YA) / (XG - XA))
 REG = atan((YG - YE) / (XG - XE))
@@ -20,8 +19,9 @@ REG = atan((YG - YE) / (XG - XE))
 print RAE, RAG, REG
 
 def afstandbep(LA, LE, LG):
+    """ Calculate intersection point based on distances """
 
-    #Meting Amsterdam-Eindhoven
+    # Amsterdam-Eindhoven
     XT = 0.5 * (LAE ** 2 + LA ** 2 - LE ** 2) / LAE
     YT = sqrt(abs(LA ** 2 - XT ** 2))
 
@@ -30,7 +30,7 @@ def afstandbep(LA, LE, LG):
     XB12 = XA + XT * cos(RAE) + YT * sin(RAE)
     YB12 = YA + XT * sin(RAE) - YT * cos(RAE)
 
-    #Meting Amsterdam-Groningen
+    # Amsterdam-Groningen
     XT = 0.5 * (LAG ** 2 + LA ** 2 - LG ** 2) / LAG
     YT = sqrt(abs(LA ** 2 - XT ** 2))
 
@@ -39,7 +39,7 @@ def afstandbep(LA, LE, LG):
     XB22 = XA + XT * cos(RAG) + YT * sin(RAG)
     YB22 = YA + XT * sin(RAG) - YT * cos(RAG)
 
-    #Metingen Eindhoven-Groningen
+    # Eindhoven-Groningen
     XT = 0.5 * (LEG ** 2 + LE ** 2 - LG ** 2) / LEG
     YT = sqrt(abs(LE ** 2 - XT ** 2))
 

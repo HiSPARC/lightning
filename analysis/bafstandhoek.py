@@ -1,12 +1,12 @@
-#snijpunt op basis van afstand en richting per station
 from math import pi, cos, sin
 
-# Coordinaten Amsterdam, Eindhoven en Groningen
+# Coordinates of stations in Amsterdam, Eindhoven and Groningen
 XA, YA, GA = 125, 485, -0.35
 XE, YE, GE = 162, 384, 0.08
 XG, YG, GG = 231, 585, 0.91
 
 def hoekafstand(RA, RE, RG, LA, LE, LG):
+    """ Calculate location based on angle and distance for a station """
 
     RArad = (RA + GA) * pi / 180
     RErad = (RE + GE) * pi / 180
