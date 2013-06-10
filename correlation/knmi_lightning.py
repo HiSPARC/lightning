@@ -1,4 +1,5 @@
 import os
+from datetime import timedelta
 
 import tables
 import numpy as np
@@ -55,6 +56,8 @@ def data_path(date):
     """Return path to KNMI LGT file
 
     Return path to the KNMI LGT file of a particular date
+    Note that 1 day is added to the file name, because KNMI names the files
+    for the end date of the data.
 
     :param date: the date as a datetime.date object
 
@@ -62,6 +65,7 @@ def data_path(date):
 
     """
     rootdir = LGT_PATH
+    date += timedelta(days=1)
     filepath = date.strftime('%Y/%-m/%Y_%-m_%-d.h5')
 
     return os.path.join(rootdir, filepath)
