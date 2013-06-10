@@ -6,7 +6,7 @@ import numpy as np
 import knmi_timestamps
 
 
-LGT_PATH = "/Users/arne/Datastore/Lightning/KNMI_Data/"
+LGT_PATH = "/Users/Matthijs/HiSPARC/Datastore/KNMI_Data/"
 
 
 def discharges(file, type=4):

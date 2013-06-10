@@ -5,7 +5,7 @@ import json
 import tables
 
 
-DATA_PATH = "/../"
+DATA_PATH = "/Users/Matthijs/HiSPARC/Datastore/HiSPARC/"
 api_base = 'http://data.hisparc.nl/api/'
 
 
