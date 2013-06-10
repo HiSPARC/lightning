@@ -36,9 +36,9 @@ def events_table(file, station_id):
 
     """
     url = api_base + 'station/%d/' % station_id
-    station_info = json.loads(urlopen(url).read())
+    station_info = json.loads(urllib2.urlopen(url).read())
     cluster = station_info['cluster']
-    group_path = '/hisparc/cluster_%s/station_%d' % (cluster, station_id)
+    group_path = '/hisparc/cluster_%s/station_%d' % (cluster.lower(), station_id)
     events = file.getNode(group_path, 'events')
 
     return events
@@ -52,7 +52,7 @@ def data_file(date):
     :return: PyTables instance of the data file
 
     """
-    filepath = get_data_path(date)
+    filepath = data_path(date)
     try:
         file = tables.openFile(filepath, 'r')
     except IOError:

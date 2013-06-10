@@ -9,12 +9,12 @@ import get_close_stations
 def main():
 
     start = datetime.date(2011, 6, 17)
-    stop = datetime.date(2011, 6, 18)
+    stop = datetime.date(2011, 6, 17)
     station_ids = get_close_stations.get_station_ids()
 
     #  This should be in the for loop and start should be date.
     #  But for better performance, it is not yet..
-    stations = get_station_positions(station_ids, start)
+    stations = get_close_stations.get_station_positions(station_ids, start)
 
     for date in daterange(start, stop):
         lgt_file = knmi_lightning.data_file(date)
@@ -23,9 +23,9 @@ def main():
         discharges = knmi_lightning.discharges(lgt_file)
         for discharge in discharges:
             matches = []
-            close_stations = find_close_stations(discharge, stations)
-            for station in close_stations:
-                events = events_table(his_file, station['station_id'])
+            close_station_ids = get_close_stations.find_close_stations(discharge, stations)
+            for station_id in close_station_ids:
+                events = hisparc_data.events_table(his_file, station_id)
                 matches.append(events_in_range(events, discharge[0]))
             print discharge
             print matches

@@ -15,7 +15,7 @@ def find_close_stations(point, stations, radius=3000):
     distances = distance_coordinates(point['latitude'], point['longitude'],
                                      lat, lon)
 
-    close = ids[np.where(distance < radius)]
+    close = ids[np.where(distances < radius)]
 
     return close
 
@@ -25,7 +25,7 @@ def distance_coordinates(lat1, lon1, lat2, lon2):
     dLat = np.radians(lat2 - lat1)
     dLon = np.radians(lon2 - lon1)
     a = (np.sin(dLat / 2) ** 2 + np.cos(np.radians(lat1)) *
-         np.cos(np.radians(lat)) * np.sin(dLon / 2) ** 2)
+         np.cos(np.radians(lat2)) * np.sin(dLon / 2) ** 2)
     c = 2 * np.arctan2(np.sqrt(a), np.sqrt(1 - a))
     distance = R * c
 
