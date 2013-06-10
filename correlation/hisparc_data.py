@@ -21,9 +21,9 @@ def events_in_range(events, start, end=None):
     """
     if not end:
         end = start + 1
-    events.readWhere('(start <= timestamp) & (timestamp < end)')
+    close_events = events.readWhere('(start <= timestamp) & (timestamp < end)')
 
-    return events
+    return close_events
 
 
 def events_table(file, station_id):
