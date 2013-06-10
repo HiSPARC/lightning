@@ -48,8 +48,13 @@ def get_station_positions(station_ids, date=None):
     return positions
 
 
-def get_station_ids():
-    stations = json.loads(urlopen(api_base + 'stations/').read())
+def get_station_ids(date=None):
+    if date:
+        url = api_base + 'stations/data/'
+        url += date.strftime('%Y/%-m/%-d/')
+        stations = json.loads(urlopen(url).read())
+    else:
+        stations = json.loads(urlopen(api_base + 'stations/').read())
 
     return [station['number'] for station in stations]
 
