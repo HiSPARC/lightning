@@ -8,6 +8,17 @@ api_base = 'http://data.hisparc.nl/api/'
 
 
 def find_close_stations(point, stations, radius=3000):
+    """Get stations close to a point
+
+    :param point: longitude and latitude close to which stations should be
+        found.
+    :param stations: list of dictionaries with station number and position
+    :param radius: the maximum distance from the point for stations to be
+        considered close.
+
+    :return: list of station ids that are within radius of the point.
+
+    """
     ids = np.array([station['station_id'] for station in stations])
     lat = np.array([station['latitude'] for station in stations])
     lon = np.array([station['longitude'] for station in stations])
@@ -20,12 +31,16 @@ def find_close_stations(point, stations, radius=3000):
     return close
 
 
-def distance_coordinates(lat1, lon1, lat2, lon2):
+def distance_coordinates(latitude1, longitude1, latitude2, longitude2):
+    """Calculate distance between two coordinates
+
+    :return: distance between points
+    """
     R = 6371000  # [m] Radius of earth
-    dLat = np.radians(lat2 - lat1)
-    dLon = np.radians(lon2 - lon1)
-    a = (np.sin(dLat / 2) ** 2 + np.cos(np.radians(lat1)) *
-         np.cos(np.radians(lat2)) * np.sin(dLon / 2) ** 2)
+    dLat = np.radians(latitude2 - latitude1)
+    dLon = np.radians(longitude2 - longitude1)
+    a = (np.sin(dLat / 2) ** 2 + np.cos(np.radians(latitude1)) *
+         np.cos(np.radians(latitude2)) * np.sin(dLon / 2) ** 2)
     c = 2 * np.arctan2(np.sqrt(a), np.sqrt(1 - a))
     distance = R * c
 
@@ -33,6 +48,11 @@ def distance_coordinates(lat1, lon1, lat2, lon2):
 
 
 def get_station_positions(station_ids, date=None):
+    """Get the positions of stations on date
+
+    :param station_ids: list of station numbers
+    :param date: date for which to get the position
+    """
     url = api_base + 'station/%d/config/'
     if date:
         url += date.strftime('%Y/%-m/%-d/')
@@ -49,6 +69,10 @@ def get_station_positions(station_ids, date=None):
 
 
 def get_station_ids(date=None):
+    """Using API get all stations that have data on date
+
+    :param date: date for which stations should have data
+    """
     if date:
         url = api_base + 'stations/data/'
         url += date.strftime('%Y/%-m/%-d/')
@@ -60,7 +84,7 @@ def get_station_ids(date=None):
 
 
 def test_501():
-    """Get Science Park stations"""
+    """Get Science Park stations, close to 501"""
     point = {'latitude': 52.3559285618, 'longitude': 4.95114426884}
     station_ids = get_station_ids()
     station_positions = get_station_positions(station_ids)

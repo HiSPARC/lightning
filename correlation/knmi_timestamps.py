@@ -13,11 +13,6 @@ def get_gps_timestamp(file, time_offset):
     reference_date = get_reference_datetime(file)
     absolute_date = get_absolute_datetime(reference_date, time_offset)
     timestamp, nanosecond = datetime_to_gpstimestamp_nanoseconds(absolute_date)
-#     absolute_dates = [get_absolute_datetime(reference_date, time_offset)
-#                       for time_offset in time_offsets]
-#     exttime = [datetime_to_gpstimestamp_nanoseconds(absolute_date)
-#                for absolute_date in absolute_dates]
-#     timestamp, nanosecond = zip(*exttime)
 
     return timestamp, nanosecond
 

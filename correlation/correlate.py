@@ -7,9 +7,9 @@ import get_close_stations
 
 
 def main():
-
-    start = datetime.date(2011, 9, 10)
-    stop = datetime.date(2011, 9, 10)
+    """Do the search for correlations between lightning strikes and events"""
+    start = datetime.date(2011, 6, 17)
+    stop = datetime.date(2011, 6, 17)
     station_ids = get_close_stations.get_station_ids(start)
 
     #  This should be in the for loop and start should be date.
@@ -27,7 +27,7 @@ def main():
             for station_id in close_station_ids:
                 events = hisparc_data.events_table(his_file, station_id)
                 matched_events = hisparc_data.events_in_range(events, discharge['timestamp'])
-                matches.append([station_id, matched_events])
+                matches.append([station_id, matched_events['ext_timestamp'])
             if len(close_station_ids) > 0:
                 print "Discharge:", discharge
                 print "Close stations: ", close_station_ids
@@ -40,7 +40,7 @@ def main():
 def daterange(start, stop):
     """Generator for date ranges
 
-    This is a generator for date ranges.  Based on a start and stop value,
+    This is a generator for date ranges. Based on a start and stop value,
     it generates one day intervals.
 
     :param start: a date instance
