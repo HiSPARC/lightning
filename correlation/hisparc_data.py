@@ -5,7 +5,7 @@ import json
 import tables
 
 
-DATA_PATH = "/Users/Matthijs/HiSPARC/Datastore/HiSPARC/"
+DATA_PATH = "/Users/arne/Datastore/"
 api_base = 'http://data.hisparc.nl/api/'
 
 
@@ -57,11 +57,12 @@ def data_file(date):
         file = tables.openFile(filepath, 'r')
     except IOError:
         print "No data for %s." % date.strftime('%Y_%-m_%-d')
+        return None
 
     return file
 
 
-def data_path(date):
+def data_path(date, rootdir=DATA_PATH):
     """Return path to HiSPARC data file
 
     Return path to the HiSPARC data file of a particular date
@@ -71,7 +72,6 @@ def data_path(date):
     :return: path to the HiSPARC data file
 
     """
-    rootdir = DATA_PATH
     filepath = date.strftime('%Y/%-m/%Y_%-m_%-d.h5')
 
     return os.path.join(rootdir, filepath)
