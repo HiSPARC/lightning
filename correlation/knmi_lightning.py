@@ -10,16 +10,17 @@ import knmi_timestamps
 LGT_PATH = "/Users/arne/Datastore/Lightning/"
 
 
-def discharges(file, type=4):
+def discharges(date, type=4):
     """Get discharge information for discharges of certain type
 
-    :param file: the date as a datetime.date object
+    :param date: the date as a datetime.date object
     :param type: the type of detected event (default: 4, cloud-ground)
 
     :return: arrays time_offset, latitude, longitude for events of chosen type
 
     """
     # FIXME: Might be a discharge2, check this.
+    file = data_file(date)
     discharge_table = file.getNode('/discharge1')
     cg_idx = np.where(discharge_table.event_type[:] == type)
 
@@ -48,7 +49,7 @@ def data_file(date):
         file = tables.openFile(filepath, 'r')
     except IOError:
         print "No datefile for %s." % date.strftime('%Y_%-m_%-d')
-
+        raise
     return file
 
 
