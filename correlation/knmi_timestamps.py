@@ -3,7 +3,7 @@ import calendar
 
 import tables
 
-from sapphire import gpstime
+from sapphire.transformations import clock as gpstime
 
 
 def get_gps_timestamp(file, time_offset):
