@@ -30,9 +30,14 @@ def discharges(date, type=4):
                    'nanoseconds': knmi_timestamps.get_gps_timestamp(file,
                                             discharge_table.time_offset[idx])[1],
                    'latitude': discharge_table.latitude[idx],
-                   'longitude': discharge_table.longitude[idx]}
+                   'longitude': discharge_table.longitude[idx],
+                   'position_error': discharge_table.position_error[idx],
+                   'rise_time': discharge_table.rise_time[idx],
+                   'decay_time': discharge_table.decay_time[idx],
+                   'current': discharge_table.current[idx]}
                   for idx in cg_idx[0]]
 
+    file.close()
     return discharges
 
 
