@@ -27,7 +27,7 @@ def discharges(date, type=4):
 
     discharges = [{'timestamp': knmi_timestamps.get_gps_timestamp(file,
                                             discharge_table.time_offset[idx])[0],
-                   'nanosecond': knmi_timestamps.get_gps_timestamp(file,
+                   'nanoseconds': knmi_timestamps.get_gps_timestamp(file,
                                             discharge_table.time_offset[idx])[1],
                    'latitude': discharge_table.latitude[idx],
                    'longitude': discharge_table.longitude[idx]}
