@@ -3,6 +3,8 @@ import json
 
 import numpy as np
 
+from sapphire import Network, Station
+
 
 api_base = 'http://data.hisparc.nl/api/'
 
@@ -19,9 +21,9 @@ def find_close_stations(point, stations, radius=3000):
     :return: list of station ids that are within radius of the point.
 
     """
-    ids = np.array([station['station_id'] for station in stations])
-    lat = np.array([station['latitude'] for station in stations])
-    lon = np.array([station['longitude'] for station in stations])
+    ids = np.array([station_id for station_id in stations.keys()])
+    lat = np.array([station['latitude'] for station in stations.values()])
+    lon = np.array([station['longitude'] for station in stations.values()])
 
     distances = distance_coordinates(point['latitude'], point['longitude'],
                                      lat, lon)
@@ -47,25 +49,29 @@ def distance_coordinates(latitude1, longitude1, latitude2, longitude2):
     return distance
 
 
-def get_station_positions(station_ids, date=None):
-    """Get the positions of stations on date
+def get_station_positions():
+    """Get the positions of all stations."""
 
-    :param station_ids: list of station numbers
-    :param date: date for which to get the position
-    """
-    url = api_base + 'station/%d/config/'
-    if date:
-        url += date.strftime('%Y/%-m/%-d/')
-    positions = []
-    for station_id in station_ids:
+    net = {}
+    for s in Network().station_numbers():
         try:
-            config = json.loads(urlopen(url % station_id).read())
-        except HTTPError:
-            continue
-        positions.append({'station_id': station_id,
-                          'latitude': config['gps_latitude'],
-                          'longitude': config['gps_longitude']})
-    return positions
+            station = Station(s)
+            station.gps_locations
+            net[s] = station
+        except:
+            pass
+    return net
+
+
+def get_station_position_for_timestamp(timestamp, stations):
+    """Get the position of all stations for a specific timestamp.
+
+    :param timestamp: unix timestamp in GPS
+    :param stations: dictionary of station objects, with the station number as
+                     the keys
+
+    """
+    return {s: u.gps_location(timestamp) for s, u in stations.iteritems()}
 
 
 def get_station_ids(date=None):
