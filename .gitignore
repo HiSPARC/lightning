@@ -5,6 +5,8 @@
 # Python
 *.pyc
 *.pyo
+*.h5
+*.csv
 
 # OS generated files
 .DS_Store*
