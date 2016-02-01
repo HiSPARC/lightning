@@ -1,7 +1,6 @@
 import tables
-import datetime
 import sapphire
-import numpy as np
+
 data = tables.open_file('/Users/reno/HiSPARC/Code/lightning/lightning_10km.h5', 'r')
 
 timestamps = data.root.lightning.timestamps
@@ -31,5 +30,5 @@ for i in sapphire.utils.pbar(xrange(nrows)):
         filters = filter14 & filter13 & filter0
         ev.read_where(filters)
 
-        diftime.compress(filters)
+        dt = diftime.compress(filters)
         dts.extend(dt)
