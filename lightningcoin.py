@@ -1,5 +1,6 @@
 import tables
 import sapphire
+from numpy import argsort
 
 data = tables.open_file('/Users/reno/HiSPARC/Code/lightning/lightning_10km_120sec.h5', 'r')
 
@@ -33,7 +34,11 @@ for i in sapphire.utils.pbar(xrange(nrows), show=False):
         events = ev[filter0]
         if len(events):
             print i, statname[j]
-            print events
-
+            prev_e = None
+            for event in events[argsort(events['ext_timestamp'])]:
+                if event['ext_timestamp'] == prev_e:
+                    continue
+                print event
+                prev_e = event['ext_timestamp']
 #        dt = diftime.compress(filters)
 #        dts.extend(dt)
